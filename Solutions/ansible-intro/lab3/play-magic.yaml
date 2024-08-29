@@ -1,0 +1,11 @@
+
+---
+# Beginning of the "Test Playbook" Play
+- name:  Test Playbook - demonstrate Fact variables
+  hosts: all
+  
+  tasks:
+  - name: Show Magic variables - inventory_hostname
+    debug:
+      msg: "Variable hostvars='{{ inventory_hostname }}'"
+

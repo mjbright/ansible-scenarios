@@ -1,0 +1,30 @@
+
+---
+
+# A conditional play:
+- hosts: all
+  name:  Install-nginx
+  # Allow to become the root user - necessary for installing nginx:
+  become: yes
+
+  # The list of tasks to perform:
+  tasks:
+    # Perform "apt-get update":
+    - name: update
+      apt:  update_cache=yes
+      when: true
+
+    # Install/upgrade to latest nginx package:
+    - name: Install Nginx
+      apt:  name=nginx state=latest
+      when: "'-2' in inventory_hostname"
+  
+      # If package is updated, restart nginx:
+      notify:
+        - restart nginx
+
+  # Restart handler:
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=reloaded
+

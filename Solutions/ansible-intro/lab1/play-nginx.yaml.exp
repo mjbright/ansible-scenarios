@@ -1,0 +1,35 @@
+---
+
+# A single play:
+- hosts: all
+  name:  Install-nginx
+  # Allow to become the root user - necessary for installing nginx:
+
+  # The list of tasks to perform:
+  tasks:
+    # Perform "apt-get update":
+    - name: update
+      become: yes
+      apt:  update_cache=yes
+
+    # Install/upgrade to latest nginx package:
+    - name: Install Nginx
+      #apt:  name=nginx state=latest
+      become: yes
+      apt:
+      - name: nginx
+        state: latest
+
+      # If package is updated, restart nginx:
+      notify:
+        - restart nginx
+
+    - name: Test Nginx
+      become_user: 'student'
+      shell: "curl -L {{ inventory_hostname }}"
+
+  # Restart handler:
+  handlers:
+    - name: restart nginx
+      become: yes
+      service: name=nginx state=reloaded

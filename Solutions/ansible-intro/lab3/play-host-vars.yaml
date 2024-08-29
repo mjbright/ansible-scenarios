@@ -1,0 +1,11 @@
+
+---
+# Beginning of the "Test Playbook" Play
+- name:  Test Playbook - demonstrate Host variables
+  hosts: all
+  
+  tasks:
+  - name: Show playbook variables
+    debug:
+      msg: "Variable values myvar1={{ myvar1 }}, myvar2={{ myvar2 }}, myvar3={{ myvar3 }}"
+

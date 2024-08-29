@@ -1,0 +1,51 @@
+
+---
+- name: Play to connect to existing Docker container
+  hosts:      all
+  connection: docker
+  vars:
+    new_users:
+      admin3: sudo
+      admin4: sudo
+      dev2:   users
+
+  pre_tasks:
+  - name: Count number of users before creation
+    shell: wc -l < /etc/passwd
+    register: op_num_users
+
+  - name: Show number of users before creation
+    debug:
+      msg: "BEFORE: The number of users in the container is {{ op_num_users.stdout }}"
+
+  post_tasks:
+  - name: Count number of users after creation
+    shell: wc -l < /etc/passwd
+    register: op_num_users
+
+  - name: Show number of users after creation
+    debug:
+      msg: "AFTER: The number of users in the container is {{ op_num_users.stdout }}"
+
+  - name: Get members of 'sudo' group
+    become: yes
+    shell: groupmems -g sudo -l
+    register: op_sudo
+
+  - name: Get members of 'users' group
+    become: yes
+    shell: groupmems -g users -l
+    register: op_users
+
+  - name: Show members of 'users' and 'sudo' groups
+    debug:
+      msg: "Members of sudo: [ {{ op_sudo.stdout }} ], members of users: [ {{ op_users.stdout }} ]"
+
+  tasks:
+   - name: Create users from a dictionary
+     ansible.builtin.user:
+       name:    "{{ item.key }}"
+       state:   present
+       groups:  "{{ item.value }}"
+     loop:  "{{ new_users | dict2items }}"
+

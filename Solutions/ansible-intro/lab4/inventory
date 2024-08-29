@@ -1,0 +1,17 @@
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[group1]
+lab4-1 myvar1="INV-lab4-1-MYVAR1"
+
+[group2]
+lab4-2
+lab4-3
+
+[group1:vars]
+myvar2="INV-group1-myvar2"
+
+[group2:vars]
+myvar1="INV-group2-mayvar1"
+

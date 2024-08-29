@@ -1,0 +1,31 @@
+
+---
+- name: Play to connect to existing Docker container
+  hosts:      all
+  connection: docker
+
+  # BECOME THIS USER:
+  become_user: dev2
+
+  vars:
+    new_users:
+      admin3: sudo
+      admin4: sudo
+      dev2:   users
+
+
+  tasks:
+   # CHECK WHAT USER/GROUP dev2 actually belongs to:
+   - name: Check user identity (using become_user)
+     ansible.builtin.shell: id -un   # Display the user name
+     become_user: dev2
+     register:    op_user_name
+
+   - name: Check group identity (using become_user)
+     ansible.builtin.shell: id -gn   # Display the group name
+     register:    op_group_name
+
+   - name: Show result
+     debug:
+       msg: "I am running as user {{ op_user_name.stdout }} / group {{ op_group_name.stdout }}"
+

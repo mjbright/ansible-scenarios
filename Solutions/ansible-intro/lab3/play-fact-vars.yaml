@@ -1,0 +1,13 @@
+
+---
+# Beginning of the "Test Playbook" Play
+- name:  Test Playbook - demonstrate Fact variables
+  hosts: all
+  
+  tasks:
+  - name: Show playbook variables
+    debug:
+      # UNCOMMENT THIS LINE TO SEE ALL FACTS:
+      #msg: "Variable facts: facts={{ hostvars['lab3-1']['ansible_facts'] }}"
+      msg: "Variable facts: user_id='{{ hostvars['lab3-1']['ansible_facts']['user_id']}}'"
+

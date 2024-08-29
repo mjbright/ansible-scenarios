@@ -1,0 +1,15 @@
+
+---
+- name: Play to connect to existing Docker container
+  hosts:      all
+  connection: docker
+
+  tasks:
+  - name: Connect to container
+    shell: dpkg -l | grep -c python
+    register: op_py
+
+  - name: Show list of python packaes
+    debug:
+      msg: "The number of Python packages in the container is {{ op_py.stdout }}"
+    

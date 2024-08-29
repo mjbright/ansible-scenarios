@@ -1,0 +1,16 @@
+---
+
+# Almost the simplest play ever !:
+- hosts: all
+  name:  ping-hosts
+
+  # The list of tasks to perform:
+  tasks:
+    # Perform ping:
+    - name: pinger
+      ansible.builtin.ping:
+
+    # Perform a failing ping:
+    - name: pinger-crash
+      ansible.builtin.ping:
+        data: crash

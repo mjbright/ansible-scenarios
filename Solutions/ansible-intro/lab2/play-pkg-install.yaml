@@ -1,0 +1,25 @@
+
+---
+
+# A conditional play:
+- hosts: all
+  name:  Install-packages
+  # Allow to become the root user - necessary for installing nginx:
+  become: yes
+
+  # The list of tasks to perform:
+  tasks:
+    # Perform "apt-get update":
+    - name: update
+      apt:  update_cache=yes
+      when: true
+
+    # Install/upgrade to latest selected packages:
+    - name: Install Packages
+      apt:
+        state: latest
+        pkg:
+        - curl
+        - wget
+        - vim
+

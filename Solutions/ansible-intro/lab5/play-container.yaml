@@ -1,0 +1,25 @@
+
+---
+- name: create container
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  
+  vars:
+    image_name:  mjbright/docker-demo
+    image_tag:   1
+    c_name:      lab5-1
+     
+  tasks:
+    - name: Start container
+      community.docker.docker_container:
+        cleanup:     true
+        detach:      true
+        image:       "{{ image_name }}:{{ image_tag  }}"
+        name:        "{{ c_name }}"
+        hostname:    "{{ c_name }}"
+        output_logs: true
+        networks:
+        - name:         "bridge"
+        published_ports:
+          "8080:80"

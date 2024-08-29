@@ -1,0 +1,16 @@
+
+---
+# Beginning of the "Test Playbook" Play
+- name:  Test Playbook - demonstrate variables
+  hosts: localhost
+  connection: local 
+  
+  vars:
+    myvar1: hello world
+    myvar2: 123
+    myvar3: True
+
+  tasks:
+  - name: Show playbook variables
+    debug:
+      msg: "Variable values myvar1={{ myvar1 }}, myvar2={{ myvar2 }}, myvar3={{ myvar3 }}"

@@ -1,0 +1,14 @@
+---
+# Beginning of the "Test Playbook" Play
+- name:  Test Playbook - demonstrate precedence of Play vs. Task variables
+  hosts: all
+  #vars:
+  #    myvar1: PLAY-hello
+  #    myvar2: PLAY-123
+  #    myvar3: PLAY-True
+
+  tasks:
+  - name: Check host_vars/host.yaml files ...
+    debug:
+      msg: "Variable values myvar1={{ myvar1 }}, myvar2={{ myvar2 }}, myvar3={{ myvar3 }}"
+

@@ -1,0 +1,11 @@
+
+# NOTE: setting variables in the inventory file is deprecated
+#       - but appropriate for this simple 'single file' example
+[all:vars]
+ansible_user=ansible
+ansible_private_key_file=/home/student/.ssh/id_ed25519
+ansible_python_interpreter=/usr/bin/python3
+
+[hosts]
+lab1-1 ansible_host=172.32.1.11
+

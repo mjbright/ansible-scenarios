@@ -1,0 +1,15 @@
+
+---
+- name: create container
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  
+  vars:
+    c_name:      lab5-1
+     
+  tasks:
+    - name: Start container
+      community.docker.docker_container:
+        name:        "{{ c_name }}"
+        state:       absent

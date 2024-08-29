@@ -1,0 +1,11 @@
+
+---
+# Beginning of the "Test Playbook" Play
+- name:  Test Playbook - demonstrate Fact variables
+  hosts: all
+  
+  tasks:
+  - name: Show playbook variables
+    debug:
+      msg: "Variable my var='{{ myvar }}'"
+

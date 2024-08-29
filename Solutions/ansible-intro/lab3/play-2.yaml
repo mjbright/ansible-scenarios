@@ -1,0 +1,22 @@
+
+---
+- name:  Test Playbook - demonstrate variables
+  hosts: all
+
+
+  tasks:
+  - name: Show playbook variables
+    vars:
+      myvar1: hello world
+      myvar2: 123
+      myvar3: True
+    debug:
+      msg: "Variable values myvar1={{ myvar1 }}, myvar2={{ myvar2 }}, myvar3={{ myvar3 }}"
+
+  - name: 2 - Show playbook variables
+    vars:
+      myvar1: hello world-2
+      myvar2: 123222
+      myvar3: False
+    debug:
+      msg: "Variable values myvar1={{ myvar1 }}, myvar2={{ myvar2 }}, myvar3={{ myvar3 }}"

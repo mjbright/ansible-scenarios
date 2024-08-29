@@ -1,0 +1,11 @@
+---
+
+# The simplest play ever !:
+- hosts: all
+  name:  ping-hosts
+
+  # The list of tasks to perform:
+  tasks:
+    # Perform ping:
+    - name: pinger
+      ping:
