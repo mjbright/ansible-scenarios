@@ -1,0 +1,28 @@
+
+# This is a Playbook
+
+---
+- hosts:      localhost
+  connection: docker
+
+  tasks:
+    - debug:
+        msg: playbook-nginx
+        
+- name: Another Play
+  ansible.builtin.import_playbook: play-install-nginx.yaml
+  vars:
+    page_title: Welcome Page [templated with Ansible]
+    page_footer: "{{ inventory_hostname }} - generated on {{ now() }}"
+    #page_content: Empty page
+    #page_content: "<h1> Ansible facts for {{ ansible_facts['hostname'] }}: </h1><pre> {{ ansible_facts | to_nice_json(indent=2) }} </pre>"
+    #page_content: "<h1> Ansible facts for {{ ansible_facts['hostname'] }}: </h1> <table> {% for mount in ansible_facts['mounts'] %} <tr><td> {{ mount.mount }} </td><td> {{ mount.device }} </td></tr> {% endfor %} </table>"
+    page_content: >-
+       "<h1> Ansible facts for {{ ansible_facts['hostname'] }}: </h1>
+       <h2> Mount points </h2>
+       <table style="border: 1px solid blue;" >
+       {% for mount in ansible_facts['mounts'] %}
+         <tr><td> {{ mount.mount }} </td><td> {{ mount.device }} </td></tr>
+       {% endfor %}
+       </table>"
+

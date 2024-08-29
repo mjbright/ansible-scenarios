@@ -1,0 +1,56 @@
+
+# This is a Play
+
+---
+- name:  Install and configure Nginx
+  hosts: all
+  
+  # The list of tasks to perform:
+  tasks:
+    # Perform "apt-get update":
+    - name: update
+      become: yes
+      apt:  update_cache=yes
+
+    # Install/upgrade to latest nginx package:
+    - name: Install Nginx
+      become: yes
+      apt:
+        name: nginx
+        state: latest
+      #apt:  name=nginx state=latest
+
+      # If package is updated, restart nginx:
+      notify:
+        - restart nginx
+
+    - name: Test Nginx
+      shell: "wget -qO - 127.0.0.1 | grep Welcome"
+      register: op_welcome
+
+    - name: Show default page
+      debug:
+        msg: "Initial welcome page: {{ op_welcome.stdout }}"
+
+    - name: Install welcome page
+      become: yes
+      ansible.builtin.template:
+        src:  index.html.tpl
+        dest: /var/www/html/index.nginx-debian.html
+      notify:
+      - restart nginx
+
+    - name: Test Nginx
+      shell: "wget -qO - 127.0.0.1 | grep Welcome"
+      register: op_welcome
+
+    - name: Show new index page
+      debug:
+        msg: "Final welcome page: {{ op_welcome.stdout }}"
+
+  # Restart handler:
+  handlers:
+    - name: restart nginx
+      become: yes
+      service: name=nginx state=reloaded
+  
